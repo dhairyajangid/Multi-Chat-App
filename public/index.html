@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chating-app</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chating-app</title>
 </head>
-
 <body>
-    <h1>chateree...</h1>
-    <button onclick=createConnection()>create-connection</button>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        function createConnection(){
-            const socker = io();
-        }
-    
-    </script>
-</body>
+  <h1>chateree...</h1>
+  <input type="text" id="message" placeholder="Enter your message" />
+  <button id="send">Send</button>
 
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const sendBtn = document.getElementById("send");
+    const messageInput = document.getElementById("message");
+
+    // establish socket connection
+    const socket = io();
+
+    sendBtn.addEventListener("click", () => {
+      const message = messageInput.value.trim();
+      if(message){
+        console.log("Sending:", message);
+        socket.emit("user-message", message);
+        messageInput.value = ""; // clear input
+      }
+    });
+  </script>
+</body>
 </html>
