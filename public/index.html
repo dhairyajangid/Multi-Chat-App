@@ -9,14 +9,20 @@
   <h1>chateree...</h1>
   <input type="text" id="message" placeholder="Enter your message" />
   <button id="send">Send</button>
+  <div id="allmessages"></div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const sendBtn = document.getElementById("send");
     const messageInput = document.getElementById("message");
-
+    const allMessage = document.getElementById("allmessages")
     // establish socket connection
     const socket = io();
+    socket.on('message',(message)=>{
+      const p = document.createElement('p');
+      p.innerText = message;
+      allMessage.appendChild(p); 
+    });
 
     sendBtn.addEventListener("click", () => {
       const message = messageInput.value.trim();

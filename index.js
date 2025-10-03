@@ -11,7 +11,10 @@ const io = new Server(server); //this io is for input/output this will control f
 io.on("connection",(socket)=>{
     socket.on("user-message",(message)=>{
         console.log("new user message", message);
-    })
+
+        // send message back to all clients (including sender)
+        io.emit("message", message);
+    });
 })
 
 app.use(express.static(path.resolve("./public")));
