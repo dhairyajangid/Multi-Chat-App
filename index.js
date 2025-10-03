@@ -8,14 +8,16 @@ const server = http.createServer(app);
 const io = new Server(server); //this io is for input/output this will control for the sockets
 
 //Sockets
-io.on("Connection",(client)=>{
-    
+io.on("connection",(socket)=>{
+    socket.on("user-message",(message)=>{
+        console.log("new user message", message);
+    })
 })
 
 app.use(express.static(path.resolve("./public")));
 
 app.get('/',(req,res)=>{
-    return res.sendFile('/public/index.html');
+    return res.sendFile(path.resolve('./public/index.html'));
 })
 
 server.listen(9000,()=>{
